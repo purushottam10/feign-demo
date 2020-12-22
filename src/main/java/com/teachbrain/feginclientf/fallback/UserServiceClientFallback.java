@@ -20,4 +20,10 @@ public class UserServiceClientFallback implements FeignClientF {
         logger.error(cause.getLocalizedMessage());
         return new User();
     }
+
+    @Override
+    public User saveClient(User user) {
+        logger.error(cause.getLocalizedMessage());
+        return new User();
+    }
 }
