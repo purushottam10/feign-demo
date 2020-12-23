@@ -3,43 +3,53 @@ package com.teachbrain.feginclientf.controller;
 import com.teachbrain.feginclientf.client.FeignClientF;
 import com.teachbrain.feginclientf.model.User;
 import com.teachbrain.feginclientf.service.UserService;
-import org.junit.jupiter.api.Test;
+import org.hamcrest.Matchers;
+import org.junit.Before;
+import org.junit.Test;
+import org.junit.runner.RunWith;
+import org.mockito.InjectMocks;
+import org.mockito.Mock;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
-import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
-import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.boot.test.mock.mockito.MockBean;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
-
 import org.springframework.http.MediaType;
+import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.test.web.servlet.MockMvc;
+import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 
 import java.util.ArrayList;
 import java.util.List;
 
 import static org.mockito.Mockito.when;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
-@WebMvcTest(ApplicationStatusController.class)
+@RunWith(SpringJUnit4ClassRunner.class)
 public class ApplicationStatusControllerTest {
 
-    @Autowired
+
     private MockMvc mockMvc;
-    @MockBean
+    @Mock
     private UserService userService;
-    @MockBean
-    private FeignClientF feignClientF;
+    @InjectMocks
+    private ApplicationStatusController applicationStatusController;
+
+    @Before
+    public void setUp() {
+        mockMvc = MockMvcBuilders.standaloneSetup(applicationStatusController)
+                .build();
+    }
 
     @Test
-    public void getAllUserTest() throws  Exception {
+    public void getAllUserTest() throws Exception {
         List<User> users = new ArrayList<>();
         users.add(new User("purushottam", "puru@gmail.com", "988484883"));
         users.add(new User("purus", "puru@gmail.com", "988484883"));
         when(userService.getAllUser()).thenReturn(users);
-       this.mockMvc.perform(get("/status/getAll")).andExpect(status().isOk())
-               .andExpect(content().contentType(MediaType.APPLICATION_JSON));
-
+        this.mockMvc.perform(get("/status/getAll")).andExpect(status().isOk())
+                .andExpect(content()
+                        .contentTypeCompatibleWith(MediaType.APPLICATION_JSON))
+                .andExpect(jsonPath("$.*", Matchers.hasSize(2)));
     }
 
 }
