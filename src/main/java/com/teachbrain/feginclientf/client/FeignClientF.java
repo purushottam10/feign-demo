@@ -1,4 +1,3 @@
-/*
 package com.teachbrain.feginclientf.client;
 
 import com.teachbrain.feginclientf.fallback.UserFallBackFactory;
@@ -17,4 +16,3 @@ public interface FeignClientF {
     @PostMapping(value = "/save", consumes = "application/json")
     User saveClient(User user);
 }
-*/
