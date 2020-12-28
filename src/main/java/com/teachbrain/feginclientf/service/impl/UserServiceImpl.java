@@ -12,8 +12,15 @@ public class UserServiceImpl implements UserService {
     @Override
     public List<User> getAllUser() {
         List<User> users= new ArrayList<>();
-        users.add(new User("purushottam","puru@gmail.com","988484883"));
-        users.add(new User("purus","puru@gmail.com","988484883"));
+        users.add(new User(1L,"purushottam","puru@gmail.com","988484883"));
+        users.add(new User(2l,"purus","puru@gmail.com","988484883"));
         return users;
     }
+
+    @Override
+    public User getById(String id) {
+        return null;
+    }
+
+
 }

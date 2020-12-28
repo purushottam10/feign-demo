@@ -1,6 +1,5 @@
 package com.teachbrain.feginclientf.controller;
 
-import com.teachbrain.feginclientf.client.FeignClientF;
 import com.teachbrain.feginclientf.model.User;
 import com.teachbrain.feginclientf.service.UserService;
 import org.hamcrest.Matchers;
@@ -9,7 +8,6 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.test.web.servlet.MockMvc;
@@ -43,8 +41,8 @@ public class ApplicationStatusControllerTest {
     @Test
     public void getAllUserTest() throws Exception {
         List<User> users = new ArrayList<>();
-        users.add(new User("purushottam", "puru@gmail.com", "988484883"));
-        users.add(new User("purus", "puru@gmail.com", "988484883"));
+        users.add(new User(1l,"purushottam", "puru@gmail.com", "988484883"));
+        users.add(new User(2l,"purus", "puru@gmail.com", "988484883"));
         when(userService.getAllUser()).thenReturn(users);
         this.mockMvc.perform(get("/status/getAll")).andExpect(status().isOk())
                 .andExpect(content()

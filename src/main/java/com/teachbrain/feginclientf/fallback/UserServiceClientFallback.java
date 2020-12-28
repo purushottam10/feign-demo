@@ -1,3 +1,4 @@
+/*
 package com.teachbrain.feginclientf.fallback;
 
 import com.teachbrain.feginclientf.client.FeignClientF;
@@ -27,3 +28,4 @@ public class UserServiceClientFallback implements FeignClientF {
         return new User();
     }
 }
+*/
